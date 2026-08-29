@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login Page Demo</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 900px;
+            max-width: 95%;
+            height: 600px;
+            display: flex;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+        }
+
+        /* LEFT SIDE */
+
+        .welcome {
+            width: 60%;
+            background: #175889;
+            color: white;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .welcome h1 {
+            font-size: 48px;
+            margin-bottom: 30px;
+        }
+
+        /* New Logo */
+
+        .logo {
+            width: 140px;
+            height: 140px;
+            background: white;
+            border-radius: 15px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            margin-bottom: 25px;
+        }
+
+        .logo span {
+            font-size: 75px;
+            color: #175889;
+        }
+
+        .welcome p {
+            font-size: 18px;
+        }
+
+
+        /* RIGHT SIDE */
+
+        .login-section {
+            width: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-box {
+            width: 85%;
+            padding: 30px;
+
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+
+        .login-box h2 {
+            text-align: center;
+            color: #175889;
+            margin-bottom: 25px;
+            font-size: 28px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+
+            border: 1px solid #aaa;
+            border-radius: 5px;
+
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #175889;
+        }
+
+        .error {
+            color: red;
+            font-size: 13px;
+            min-height: 18px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+
+            border: none;
+            border-radius: 5px;
+
+            background: #175889;
+            color: white;
+
+            font-size: 17px;
+            cursor: pointer;
+
+            margin-top: 5px;
+        }
+
+        button:hover {
+            background: #0e4165;
+        }
+
+        #message {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 15px;
+            min-height: 20px;
+        }
+
+        .register {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .register a {
+            color: #175889;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+
+        /* MOBILE */
+
+        @media(max-width:700px) {
+
+            .container {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .welcome,
+            .login-section {
+                width: 100%;
+            }
+
+            .welcome {
+                padding: 40px 20px;
+            }
+
+            .welcome h1 {
+                font-size: 38px;
+            }
+
+            .login-section {
+                padding: 30px 0;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <div class="container">
+
+        <!-- LEFT -->
+        <div class="welcome">
+
+            <h1>Welcome</h1>
+
+            <!-- NEW LOGO -->
+            <div class="logo">
+                <span>✓</span>
+            </div>
+
+            <p>Login to access your account</p>
+
+        </div>
+
+
+        <!-- RIGHT -->
+        <div class="login-section">
+
+            <div class="login-box">
+
+                <h2>Login</h2>
+
+                <form id="loginForm">
+
+                    <label>Email</label>
+
+                    <input
+                        type="text"
+                        id="email"
+                        placeholder="Enter your email"
+                    >
+
+                    <span id="emailError" class="error"></span>
+
+
+                    <label>Password</label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter your password"
+                    >
+
+                    <span id="passwordError" class="error"></span>
+
+
+                    <button type="submit">
+                        Login
+                    </button>
+
+                    <div id="message"></div>
+
+                </form>
+
+
+                <p class="register">
+                    Don't have an account?
+                    <a href="#" onclick="registerUser()">
+                        Register Here
+                    </a>
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        // ====================================
+        // DUMMY LOGIN CREDENTIALS
+        // ====================================
+
+        const correctEmail = "demo@example.com";
+        const correctPassword = "Demo@123";
+
+
+        // ====================================
+        // GET HTML ELEMENTS
+        // ====================================
+
+        const form = document.getElementById("loginForm");
+
+        const email = document.getElementById("email");
+        const password = document.getElementById("password");
+
+        const emailError = document.getElementById("emailError");
+        const passwordError = document.getElementById("passwordError");
+
+        const message = document.getElementById("message");
+
+
+        // ====================================
+        // LOGIN
+        // ====================================
+
+        form.addEventListener("submit", function(event) {
+
+            // Stop page from refreshing
+            event.preventDefault();
+
+
+            // Clear old messages
+            emailError.textContent = "";
+            passwordError.textContent = "";
+            message.textContent = "";
+
+
+            let valid = true;
+
+
+            // =================================
+            // EMAIL VALIDATION
+            // =================================
+
+            if (email.value.trim() === "") {
+
+                emailError.textContent =
+                    "Email is required";
+
+                valid = false;
+
+            }
+            else if (!validateEmail(email.value.trim())) {
+
+                emailError.textContent =
+                    "Enter a valid email address";
+
+                valid = false;
+            }
+
+
+            // =================================
+            // PASSWORD VALIDATION
+            // =================================
+
+            if (password.value.trim() === "") {
+
+                passwordError.textContent =
+                    "Password is required";
+
+                valid = false;
+
+            }
+            else if (password.value.length < 6) {
+
+                passwordError.textContent =
+                    "Password must be at least 6 characters";
+
+                valid = false;
+            }
+
+
+            // Stop if validation failed
+
+            if (!valid) {
+                return;
+            }
+
+
+            // =================================
+            // AUTHORIZATION CHECK
+            // =================================
+
+            if (
+                email.value.trim() === correctEmail &&
+                password.value === correctPassword
+            ) {
+
+                message.textContent =
+                    "✓ Login Successful!";
+
+                message.style.color = "green";
+
+
+                // Save login status
+
+                localStorage.setItem(
+                    "isLoggedIn",
+                    "true"
+                );
+
+                localStorage.setItem(
+                    "userEmail",
+                    email.value.trim()
+                );
+
+
+            }
+            else {
+
+                message.textContent =
+                    "✗ Invalid Email or Password";
+
+                message.style.color = "red";
+            }
+
+        });
+
+
+        // ====================================
+        // EMAIL VALIDATION FUNCTION
+        // ====================================
+
+        function validateEmail(email) {
+
+            const pattern =
+                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            return pattern.test(email);
+        }
+
+
+        // ====================================
+        // REGISTER BUTTON
+        // ====================================
+
+        function registerUser() {
+
+            alert(
+                "Registration feature is only a demo."
+            );
+        }
+
+    </script>
+
+</body>
+</html>
